@@ -13,7 +13,7 @@ with open(sys.argv[1],'r') as f:
 
 
 par = {'js_code': js_orig,
-       'compilation_level': 'SIMPLE_OPTIMIZATIONS',
+       'compilation_level': 'ADVANCED_OPTIMIZATIONS',
        'output_format': 'text',
        'formatting': 'pretty_print',
        'language': 'ECMASCRIPT6',
