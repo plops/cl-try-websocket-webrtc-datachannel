@@ -316,6 +316,14 @@
 		       (princ script-str s)
 		       )))))))
 
+
+(with-open-file (s "js/server.js"
+		   :if-exists :supersede
+		   :if-does-not-exist :create
+		   :direction :output)
+  (write-sequence 
+   (generate-js nil :server t) s))
+
 (defun handler (env)
   (destructuring-bind (&key server-name remote-addr remote-port path-info &allow-other-keys) env
     (alexandria:switch (path-info :test #'equal)

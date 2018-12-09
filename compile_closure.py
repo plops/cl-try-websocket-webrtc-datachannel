@@ -1,9 +1,9 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 
 # from kenny tilton's code:
 # https://github.com/kennytilton/matrix/blob/master/js/matrix/matrix_compile.py
 
-import httplib, urllib, sys
+import requests, urllib, sys
 
 # Define the parameters for the POST request and encode them in
 # a URL-safe format.
@@ -11,19 +11,12 @@ import httplib, urllib, sys
 with open(sys.argv[1],'r') as f:
     js_orig = f.read()
 
-params = urllib.urlencode([
-    ('js_code', js_orig),
-    ('compilation_level', 'SIMPLE_OPTIMIZATIONS'),
-    ('output_format', 'text'),
-    ('formatting', 'pretty_print'),
-    ('output_info', 'warnings'),
-  ])
 
-# Always use the following value for the Content-type header.
-headers = { "Content-type": "application/x-www-form-urlencoded" }
-conn = httplib.HTTPConnection('closure-compiler.appspot.com')
-conn.request('POST', '/compile', params, headers)
-response = conn.getresponse()
-data = response.read()
-print(data)
-conn.close()
+par = {'js_code': js_orig,
+       'compilation_level': 'SIMPLE_OPTIMIZATIONS',
+       'output_format': 'text',
+       'formatting': 'pretty_print',
+       'output_info': 'compiled_code',}
+
+r = requests.post('https://closure-compiler.appspot.com/compile', data=par)
+print(r.text)
