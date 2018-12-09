@@ -1,13 +1,11 @@
 var player = document.getElementById("player"), log = document.getElementById("log");
-function logger(b) {
-  log.innerHTML = "object" == typeof b ? log.innerHTML + ((JSON && JSON.stringify ? JSON.stringify(b) : b) + "<br />") : log.innerHTML + (b + "<br />");
+function logger(c) {
 }
-function dbg(b, a) {
-  logger(b + (JSON && JSON.stringify ? JSON.stringify(a) : a));
+function dbg(c, b) {
 }
-function wait(b) {
-  return new Promise(function(a) {
-    setTimeout(a, b);
+function wait(c) {
+  return new Promise(function(b) {
+    setTimeout(b, c);
   });
 }
 function create_websocket() {
@@ -21,35 +19,35 @@ function create_websocket() {
   } else {
     return logger("Error: WebSocket is not supported"), !1;
   }
-  var b = "wss://" + document.getElementById("wss-server-connection").innerText + "/", a = new WebSocket(b);
-  a.onopen = function() {
-    create_webrtc(a);
-    a.send("{startup: '" + document.getElementById("ssl-client-connection").innerText + "'}");
+  var c = "wss://" + document.getElementById("wss-server-connection").innerText + "/", b = new WebSocket(c);
+  b.onopen = function() {
+    create_webrtc(b);
+    b.send("{startup: '" + document.getElementById("ssl-client-connection").innerText + "'}");
     logger("websocket open");
   };
-  a.onmessage = function(a) {
+  b.onmessage = function(a) {
     dbg("websocket received message: e.data=", a.data);
   };
-  a.onclose = function(a) {
+  b.onclose = function(a) {
     logger("websocket closed: " + a.data);
     1000 != a.code && (1006 == code && logger("websocket: probably authentication error, check your javascript console!"), logger("websocket connection was not closed normally! code=" + a.code + " reason=" + a.reason), navigator.onLine || logger("websocket: You are offline!"));
   };
-  a.onerror = function(a) {
+  b.onerror = function(a) {
     logger("websocket error: " + a.data);
   };
-  return a;
+  return b;
 }
-function create_webrtc(b) {
+function create_webrtc(c) {
   logger("create_webrtc ..");
-  var a = new RTCPeerConnection({iceServers:[]});
-  a.onicecandidate = function(a) {
-    a.candidate && (dbg("onicecandidate: event=", a), b.send(a.candidate));
+  var b = new RTCPeerConnection({iceServers:[]});
+  b.onicecandidate = function(a) {
+    a.candidate && (dbg("onicecandidate: event=", a), c.send(a.candidate));
   };
-  a.createDataChannel("datachannel", {reliable:!1});
-  a.createOffer().then(function(c) {
-    dbg("createOffer: offer=", c);
-    a.setLocalDescription(c);
-    b.send(JSON.stringify({messageType:"offer", peerDescription:c}));
+  b.createDataChannel("datachannel", {reliable:!1});
+  b.createOffer().then(function(a) {
+    dbg("createOffer: offer=", a);
+    b.setLocalDescription(a);
+    c.send(JSON.stringify({messageType:"offer", peerDescription:a}));
   });
 }
 function startup() {

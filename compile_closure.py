@@ -16,6 +16,7 @@ par = {'js_code': js_orig,
        'compilation_level': 'SIMPLE_OPTIMIZATIONS',
        'output_format': 'text',
        'formatting': 'pretty_print',
+       'language': 'ECMASCRIPT6',
        'output_info': 'compiled_code',}
 
 r = requests.post('https://closure-compiler.appspot.com/compile', data=par)

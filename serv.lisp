@@ -5,6 +5,9 @@
 		       "alexandria"))
 (in-package #:cl-js-generator)
 
+(setf *features* (union *features* '(:nolog)))
+;(setf *features* (set-difference *features* '(:nolog)))
+
 
 (setq cl-who:*attribute-quote-char* #\")
 (setf cl-who::*html-mode* :html5)
@@ -158,7 +161,10 @@
 
 (defun generate-js (env &key (server nil))
   (destructuring-bind (&key server-name remote-addr remote-port path-info &allow-other-keys) env
-   (cl-js-generator::beautify-source
+   (emit-js
+    :clear-env t
+    :code 
+    ;;cl-js-generator::beautify-source
     `(let ((player (document.getElementById (string "player")))
 	   (log (document.getElementById (string "log"))))
 
@@ -175,6 +181,7 @@
 		   (+ message
 		      (string "<br />")))))
        (def dbg (title obj)
+	 #-nolog
 	 (logger (+ title
 		    (? (and JSON
 			    JSON.stringify)
