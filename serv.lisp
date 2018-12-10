@@ -286,8 +286,9 @@
    (cl-who:with-html-output-to-string (s)
      (cl-who:htm
       (:html
-       (:head (:title (if server "server" "client"))
-	      (:script :src (if server "server.js" "client.js")))
+       (:head (:title (cl-who:fmt (if server "server" "client")))
+	      (:script :src (cl-who:fmt (if server "server.js" "client.js")))
+	      )
        (:body
 	(:div
 	 (:table
