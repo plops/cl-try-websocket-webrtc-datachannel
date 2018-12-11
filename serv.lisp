@@ -4,7 +4,7 @@
 		       "local-time"
 		       "alexandria"))
 (in-package #:cl-js-generator)
-
+;;https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Simple_RTCDataChannel_sample
 ;(setf *features* (union *features* '(:nolog)))
 (setf *features* (set-difference *features* '(:nolog)))
 
@@ -302,7 +302,15 @@
 			  (cl-who:htm
 			   (:td (cl-who:fmt "~a" (getf row x)))))))))
 	 )
-		    
+	(:div :id "buttons"
+	      (:button :id "button-connect" "connect")
+	      (:button :id "button-disconnect" "disconnect"))
+	(:div :class "messagebox"
+	      (:label :for "message" "Enter a message:"
+		      (:input :type "text"
+			      :name "message"
+			      :id "message"))
+	      (:button :id "button-send" "send"))
 	(:p (princ (format nil "~a" env) s))
 	(:div :id "wss-server-connection"
 	      (princ (format nil "~a:~a"
