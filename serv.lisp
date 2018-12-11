@@ -279,6 +279,15 @@
 	   
        (def startup ()
 	 (logger (string "startup .."))
+
+	 ,@(loop for (e f) in '((button-connect connect_peers)
+			    (button-disconnect disconnect_peers)
+			    (button-send send_message))
+		collect
+		`(dot (document.getElementById (string ,e))
+		      (addEventListener (string "click"
+						)
+					,f false)))
 	     
 	 (let ((ws (create_websocket)))))
        (window.addEventListener (string "load")
@@ -311,6 +320,8 @@
 			      :name "message"
 			      :id "message"))
 	      (:button :id "button-send" "send"))
+	(:div :class "messagebox" :id "receivebox"
+	      (:p "Messages received:"))
 	(:p (princ (format nil "~a" env) s))
 	(:div :id "wss-server-connection"
 	      (princ (format nil "~a:~a"
