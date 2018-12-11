@@ -252,25 +252,30 @@
 					      
 					  (dbg (string "onicecandidate: event=")
 					       event)
-					  (signaling.send event.candidate))
+					  (signaling.send (JSON.stringify
+							   (dict ((string "messageType")
+								  (string "icecandidate"))
+								 ((string "peerDescription")
+								  event.candidate))))
+					  )
 					 ;; else all have been sent
 					 )))
 	   (let ((chan_send (pc.createDataChannel (string
-						   "datachannel")
-						  (dict (reliable
-							 false)))))
-	     #+nil (setf chan_send.onopen (lambda (s)))
-	     (dot (pc.createOffer)
-		  (then (lambda (offer)
-			  (dbg (string "createOffer: offer=")
-			       offer)
-			  (pc.setLocalDescription offer)
-			  (signaling.send
-			   (JSON.stringify
-			    (dict ((string "messageType")
-				   (string  "offer"))
-				  ((string "peerDescription")
-				   offer))))))))))
+						    "datachannel")
+						   (dict (reliable
+							  false)))))
+	      #+nil (setf chan_send.onopen (lambda (s)))
+	      (dot (pc.createOffer)
+		   (then (lambda (offer)
+			   (dbg (string "createOffer: offer=")
+				offer)
+			   (pc.setLocalDescription offer)
+			   (signaling.send
+			    (JSON.stringify
+			     (dict ((string "messageType")
+				    (string  "offer"))
+				   ((string "peerDescription")
+				    offer))))))))))
 	   
        (def startup ()
 	 (logger (string "startup .."))
@@ -314,7 +319,7 @@
 	    "accept secure websocket cert here")
 
 		    
-	(:div :id "log")
+	(:pre :id "log")
 		    
 		    
 		    (:script :src (if server "server.js" "client.js"))
