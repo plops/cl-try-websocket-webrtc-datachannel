@@ -4,7 +4,7 @@
 		       "local-time"
 		       "alexandria"))
 (in-package #:cl-js-generator)
-;;https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Simple_RTCDataChannel_sample
+;; https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Simple_RTCDataChannel_sample
 ;(setf *features* (union *features* '(:nolog)))
 (setf *features* (set-difference *features* '(:nolog)))
 
