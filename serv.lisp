@@ -5,6 +5,8 @@
 		       "alexandria"))
 (in-package #:cl-js-generator)
 ;; https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Simple_RTCDataChannel_sample
+;; https://justinribeiro.com/chronicle/2019/01/31/tiny-pwas-and-why-i-keep-building-them/ wakelock api
+
 ;(setf *features* (union *features* '(:nolog)))
 (setf *features* (set-difference *features* '(:nolog)))
 
